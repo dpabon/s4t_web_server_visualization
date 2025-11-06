@@ -1,7 +1,7 @@
 FROM continuumio/miniconda3
 WORKDIR /app
-COPY environment.yml .
-RUN conda env update --file environment.yml --prune --name base
+RUN conda config --add channels conda-forge
+RUN conda install xcube
 EXPOSE 80
 
 # fix projsee https://github.com/conda-forge/geopandas-feedstock/issues/63

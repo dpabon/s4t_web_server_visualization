@@ -1,0 +1,11 @@
+services:
+  S4T:
+    image: ghcr.io/dpabon/s4t_web_server_visualization
+    build:
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      - $PWD/data/2018_LST_s4t.zarr:/data/data.zarr
+    ports:
+      - "80:80"
+    restart: unless-stopped
