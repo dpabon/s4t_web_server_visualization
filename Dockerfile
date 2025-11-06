@@ -1,7 +1,10 @@
 FROM continuumio/miniconda3
 WORKDIR /app
-RUN conda config --add channels conda-forge
-RUN conda install xcube
+RUN git clone https://github.com/xcube-dev/xcube-viewer.git
+RUN 
+RUN git clone https://github.com/xcube-dev/xcube.git
+COPY config.json ./xcube/src/resources/config.json
+RUN pip install -ve ./xcube
 EXPOSE 80
 
 # fix projsee https://github.com/conda-forge/geopandas-feedstock/issues/63

@@ -1,0 +1,40 @@
+{
+  "name": "default",
+  "server": {
+    "id": "local",
+    "name": "Local Server",
+    "url": "http://localhost:8080"
+  },
+  "branding": {
+    "layerVisibilities": {  
+      "baseMaps.CartoDB.Dark Matter": true  
+    },
+    "appBarTitle": "xcube Viewer",
+    "windowTitle": "xcube Viewer",
+    "headerBackgroundColor": "#606060",
+    "headerIconStyle":{
+      "color": "#FFFFFF"
+    },
+    "themeMode": "system",
+    "compact": false,
+    "organisationUrl": "https://xcube.readthedocs.io/",
+    "logoImage": "images/logo.png",
+    "logoWidth": 32,
+    "headerTitleStyle": {
+      "fontFamily": "Roboto, Segoe UI, Helvetica, Arial, sans-serif",
+      "fontSize": "1.2rem"
+    },
+    "baseMapUrl": "https://services.arcgisonline.com/arcgis/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}",
+    "defaultAgg": "mean",
+    "polygonFillOpacity": 0.2,
+    "mapProjection": "EPSG:3857",
+    "allowAboutPage": true,
+    "allowDownloads": true,
+    "allowRefresh": true,
+    "allowSharing": true,
+    "allowUserVariables": true,
+    "allowViewModePython": true,
+    "allow3D": true,
+    "permalinkExpirationDays": 120
+  }
+}
