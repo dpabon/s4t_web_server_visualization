@@ -1,9 +1,17 @@
 FROM continuumio/miniconda3
 WORKDIR /app
+RUN apt update
+RUN apt install -y npm
 RUN git clone https://github.com/xcube-dev/xcube-viewer.git
-RUN 
+
+COPY config.json ./xcube-viewer/src/resources/config.json
+
+RUN npm run build ./xcube-viewer/
+
 RUN git clone https://github.com/xcube-dev/xcube.git
-COPY config.json ./xcube/src/resources/config.json
+
+RUN  mv ./xcube-viewer/dist ./xcube/webapi/viewer/data 
+
 RUN pip install -ve ./xcube
 EXPOSE 80
 
