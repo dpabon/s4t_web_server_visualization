@@ -42,7 +42,7 @@ jobs:
               run: |
                 install -m 600 -D /dev/null ~/.ssh/id_rsa
                 echo "$SSH_PRIVATE_KEY" > ~/.ssh/id_rsa
-                host= '$VM_HOST'
+                host= $VM_HOST
                 hosts="$(dig +short "$host" | grep -v '\.$' | sed -z 's|\n|,|g')$host"
                 ssh-keyscan -H "$hosts" > ~/.ssh/known_hosts
             - uses: actions/checkout@v4
