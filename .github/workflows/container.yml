@@ -36,7 +36,7 @@ jobs:
                   cache-from: type=registry,ref=ghcr.io/dpabon/s4t_web_server_visualization:latest
                   cache-to: type=inline
             
-            - name: Write SSH keys
+            - name: Write SSH keys and deploy website
               env:
                 SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
                 VM_HOST: ${{ secrets.VM_HOST }}
@@ -46,9 +46,6 @@ jobs:
                 host_local="$VM_HOST"
                 hosts="$(dig +short "$host_local" | grep -v '\.$' | sed -z 's|\n|,|g')$host_local"
                 ssh-keyscan -H "$hosts" > ~/.ssh/known_hosts
-            - uses: actions/checkout@v4
-            - name: Deploy website
-              run: |
                 ssh $VM_HOST sh <<EOF
                 cd /media/s4t_web_server_visualization
                 git fetch
@@ -56,3 +53,4 @@ jobs:
                 docker compose up --detach
                 docker system prune
                 EOF
+                
