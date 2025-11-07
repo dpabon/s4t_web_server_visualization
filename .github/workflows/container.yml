@@ -35,3 +35,22 @@ jobs:
                       ghcr.io/dpabon/s4t_web_server_visualization:${{ github.sha }}
                   cache-from: type=registry,ref=ghcr.io/dpabon/s4t_web_server_visualization:latest
                   cache-to: type=inline
+            - name: Write SSH keys
+              env:
+                SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+              run: |
+                install -m 600 -D /dev/null ~/.ssh/id_rsa
+                echo "$SSH_PRIVATE_KEY" > ~/.ssh/id_rsa
+                host=${{ secrets.VM_HOST }}
+                hosts="$(dig +short "$host" | grep -v '\.$' | sed -z 's|\n|,|g')$host"
+                ssh-keyscan -H "$hosts" > ~/.ssh/known_hosts
+            - uses: actions/checkout@v4
+            - name: Deploy website
+              run: |
+                ssh ${{ secrets.VM_HOST }} sh <<EOF
+                cd /media/s4t_web_server_visualization
+                git fetch
+                git checkout ${{ github.sha }}
+                docker compose up --detach
+                docker system prune
+                EOF
