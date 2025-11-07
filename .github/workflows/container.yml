@@ -35,12 +35,7 @@ jobs:
                       ghcr.io/dpabon/s4t_web_server_visualization:${{ github.sha }}
                   cache-from: type=registry,ref=ghcr.io/dpabon/s4t_web_server_visualization:latest
                   cache-to: type=inline
-            - uses: actions/checkout@v2
-            - name: Setup tmate session
-              uses: mxschmitt/action-tmate@v3
-              env:
-                SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
-                VM_HOST: ${{ secrets.VM_HOST }}
+            
             - name: Write SSH keys
               env:
                 SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
@@ -48,8 +43,8 @@ jobs:
               run: |
                 install -m 600 -D /dev/null ~/.ssh/id_rsa
                 echo "$SSH_PRIVATE_KEY" > ~/.ssh/id_rsa
-                host= "$VM_HOST"
-                hosts="$(dig +short "$host" | grep -v '\.$' | sed -z 's|\n|,|g')$host"
+                host_local="$VM_HOST"
+                hosts="$(dig +short "$host_local" | grep -v '\.$' | sed -z 's|\n|,|g')$host_local"
                 ssh-keyscan -H "$hosts" > ~/.ssh/known_hosts
             - uses: actions/checkout@v4
             - name: Deploy website
