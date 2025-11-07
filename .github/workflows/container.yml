@@ -41,9 +41,21 @@ jobs:
                 SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
                 VM_HOST: ${{ secrets.VM_HOST }}
               run: |
+                set -ex  # Enable tracing and exit on error
                 install -m 600 -D /dev/null ~/.ssh/id_rsa
                 echo "$SSH_PRIVATE_KEY" > ~/.ssh/id_rsa
+                # Check if the key was written (non-empty)
+                if [ ! -s ~/.ssh/id_rsa ]; then
+                  echo "Error: SSH_PRIVATE_KEY is empty or failed to write" >&2
+                  exit 1
+                fi
                 host_local="$VM_HOST"
+                echo "Resolving host: $host_local"
+                # Run dig and capture output
+                ips=$(dig +short "$host_local" | grep -v '\.$' || true)
+                if [ -z "$ips" ]; then
+                  echo "Warning: dig did not return any IPs for $host_local"
+                fi
                 hosts="$(dig +short "$host_local" | grep -v '\.$' | sed -z 's|\n|,|g')$host_local"
                 ssh-keyscan -H "$hosts" > ~/.ssh/known_hosts
                 ssh $VM_HOST sh <<EOF
@@ -51,6 +63,6 @@ jobs:
                 git fetch
                 git checkout ${{ github.sha }}
                 docker compose up --detach
-                docker system prune
+                docker system prune -f
                 EOF
                 
