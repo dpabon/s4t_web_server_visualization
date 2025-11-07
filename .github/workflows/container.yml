@@ -35,12 +35,15 @@ jobs:
                       ghcr.io/dpabon/s4t_web_server_visualization:${{ github.sha }}
                   cache-from: type=registry,ref=ghcr.io/dpabon/s4t_web_server_visualization:latest
                   cache-to: type=inline
-            
+            - uses: actions/checkout@v2
+            - name: Setup tmate session
+              uses: mxschmitt/action-tmate@v3
             - name: Write SSH keys and deploy website
               env:
                 SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
                 VM_HOST: ${{ secrets.VM_HOST }}
                 VM_USER: ${{ secrets.VM_USER }}
+              
               run: |
                 set -ex  # Enable debug and exit immediately on failure
 
