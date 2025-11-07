@@ -41,31 +41,30 @@ jobs:
                 SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
                 VM_HOST: ${{ secrets.VM_HOST }}
               run: |
-                sudo apt update
-                sudo apt install dnsutils -y
+                set -ex  # Enable debug and exit immediately on failure
 
-                set -ex  # Enable tracing and exit on error
-                install -m 600 -D /dev/null ~/.ssh/id_rsa
+                # Create .ssh directory if it doesn't exist
+                mkdir -p ~/.ssh
+                chmod 700 ~/.ssh
+
+                # Write the private key to a file
                 echo "$SSH_PRIVATE_KEY" > ~/.ssh/id_rsa
-                # Check if the key was written (non-empty)
-                if [ ! -s ~/.ssh/id_rsa ]; then
-                  echo "Error: SSH_PRIVATE_KEY is empty or failed to write" >&2
-                  exit 1
-                fi
-                host_local="$VM_HOST"
-                echo "Resolving host: $host_local"
-                # Run dig and capture output
-                ips=$(dig +short "$host_local" | grep -v '\.$' || true)
-                if [ -z "$ips" ]; then
-                  echo "Warning: dig did not return any IPs for $host_local"
-                fi
-                hosts="$(dig +short "$host_local" | grep -v '\.$' | sed -z 's|\n|,|g')$host_local"
-                ssh-keyscan -H "$hosts" > ~/.ssh/known_hosts
-                ssh $VM_HOST sh <<EOF
+                chmod 600 ~/.ssh/id_rsa
+                
+                 # Scan the host's public key to known_hosts to avoid prompt
+                ssh-keyscan -H "$VM_HOST" >> ~/.ssh/known_hosts
+                chmod 644 ~/.ssh/known_hosts
+
+                # SSH into the VM and run deployment commands
+                ssh -o StrictHostKeyChecking=no $VM_HOST << 'EOF'
+                set -e  # Exit on error
                 cd /media/s4t_web_server_visualization
-                git fetch
+                git fetch origin
                 git checkout ${{ github.sha }}
-                docker compose up --detach
-                docker system prune -f
+                
+                docker compose down  # Stop and remove existing containers (if any)
+                docker compose pull  # Pull new images
+                docker compose up -d --build  # Build and start in detached mode
+                docker system prune -af
                 EOF
                 
