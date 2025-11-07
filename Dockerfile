@@ -26,4 +26,4 @@ ENV PROJ_LIB=/opt/conda/share/proj
 
 EXPOSE 80
 
-CMD xcube serve /data/data.zarr -p 80
+CMD xcube serve -c config.yml /data/data.zarr -p 80

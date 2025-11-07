@@ -1,0 +1,25 @@
+
+DatasetAttribution:
+  - "Max-Planck Institute for Biogeochemistry. Joint Research Centre"
+
+DatasetGroups:
+   - Identifier: S4T
+     Title: Space for Time results for Africa and Europe (2018)
+     Description: This is a zarr dataset group description!
+
+Datasets:
+  - Identifier: local
+    Title: Space for Time results for Africa and Europe (2018)
+    GroupId: first_local
+    #BoundingBox: [0.0, 50, 5.0, 52.5]
+    FileSystem: file
+    Path: /home/dpabon/Downloads/2018_LST_s4t.zarr
+    Style: default
+    TimeSeriesDataset: local_ts
+    #layerVisibilities: 
+      #baseMaps.CartoDB.Dark Matter: true  
+    #Variables:
+
+#Styles:
+#  - Identifier: default
+  
