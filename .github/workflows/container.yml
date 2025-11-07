@@ -35,19 +35,3 @@ jobs:
                       ghcr.io/dpabon/s4t_web_server_visualization:${{ github.sha }}
                   cache-from: type=registry,ref=ghcr.io/dpabon/s4t_web_server_visualization:latest
                   cache-to: type=inline
-            - name: Execute remote SSH commands using password
-              uses: appleboy/ssh-action@v1
-              with:
-                host: ${{ secrets.VM_HOST }}
-                key: ${{ secrets.SSH_PRIVATE_KEY }}
-                username: ${{ secrets.MV_USER }}
-                port: 22
-                script: |
-                  whoami
-                  cd /media/s4t_web_server_visualization
-                  git fetch origin
-                  git checkout ${{ github.sha }}
-                  docker compose down  # Stop and remove existing containers (if any)
-                  docker compose pull  # Pull new images
-                  docker compose up -d --build  # Build and start in detached mode
-                  docker system prune -af
