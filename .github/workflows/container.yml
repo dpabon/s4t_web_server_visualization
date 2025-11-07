@@ -38,6 +38,9 @@ jobs:
             - uses: actions/checkout@v2
             - name: Setup tmate session
               uses: mxschmitt/action-tmate@v3
+              env:
+                SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+                VM_HOST: ${{ secrets.VM_HOST }}
 
             - name: Write SSH keys
               env:
