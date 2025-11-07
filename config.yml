@@ -13,7 +13,7 @@ Datasets:
     GroupId: first_local
     #BoundingBox: [0.0, 50, 5.0, 52.5]
     FileSystem: file
-    Path: /home/dpabon/Downloads/2018_LST_s4t.zarr
+    Path: /data/data.zarr
     Style: default
     TimeSeriesDataset: local_ts
     #layerVisibilities: 
