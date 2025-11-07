@@ -48,7 +48,7 @@ jobs:
             - uses: actions/checkout@v4
             - name: Deploy website
               run: |
-                ssh ${{ secrets.VM_HOST }} sh <<EOF
+                ssh $VM_HOST sh <<EOF
                 cd /media/s4t_web_server_visualization
                 git fetch
                 git checkout ${{ github.sha }}
