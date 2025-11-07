@@ -35,40 +35,18 @@ jobs:
                       ghcr.io/dpabon/s4t_web_server_visualization:${{ github.sha }}
                   cache-from: type=registry,ref=ghcr.io/dpabon/s4t_web_server_visualization:latest
                   cache-to: type=inline
-            - uses: actions/checkout@v2
-            - name: Setup tmate session
-              uses: mxschmitt/action-tmate@v3
-            - name: Write SSH keys and deploy website
-              env:
-                SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
-                VM_HOST: ${{ secrets.VM_HOST }}
-                VM_USER: ${{ secrets.VM_USER }}
-              
-              run: |
-                set -ex  # Enable debug and exit immediately on failure
-
-                # Create .ssh directory if it doesn't exist
-                mkdir -p ~/.ssh
-                chmod 700 ~/.ssh
-
-                # Write the private key to a file
-                echo "$SSH_PRIVATE_KEY" > ~/.ssh/id_rsa
-                chmod 600 ~/.ssh/id_rsa
-                
-                 # Scan the host's public key to known_hosts to avoid prompt
-                ssh-keyscan -H "$VM_HOST" >> ~/.ssh/known_hosts
-                chmod 644 ~/.ssh/known_hosts
-
-                # SSH into the VM and run deployment commands
-                ssh -o StrictHostKeyChecking=no ${VM_USER}@${VM_HOST} << 'EOF'
-                set -e  # Exit on error
-                cd /media/s4t_web_server_visualization
-                git fetch origin
-                git checkout ${{ github.sha }}
-                
-                docker compose down  # Stop and remove existing containers (if any)
-                docker compose pull  # Pull new images
-                docker compose up -d --build  # Build and start in detached mode
-                docker system prune -af
-                EOF
-                
+            - name: Execute remote SSH commands using password
+              uses: appleboy/ssh-action@v1
+              with:
+                host: ${{ secrets.VM_HOST }}
+                key: ${{ secrets.SSH_PRIVATE_KEY }}
+                port: 22
+                script: |
+                  whoami
+                  cd /media/s4t_web_server_visualization
+                  git fetch origin
+                  git checkout ${{ github.sha }}
+                  docker compose down  # Stop and remove existing containers (if any)
+                  docker compose pull  # Pull new images
+                  docker compose up -d --build  # Build and start in detached mode
+                  docker system prune -af
