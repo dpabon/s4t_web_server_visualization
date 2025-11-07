@@ -41,8 +41,8 @@ jobs:
                 SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
                 VM_HOST: ${{ secrets.VM_HOST }}
               run: |
-                apt update
-                apt install dnsutils
+                sudo apt update
+                sudo apt install dnsutils -y
 
                 set -ex  # Enable tracing and exit on error
                 install -m 600 -D /dev/null ~/.ssh/id_rsa
