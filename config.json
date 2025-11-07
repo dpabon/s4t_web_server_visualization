@@ -9,7 +9,7 @@
     "layerVisibilities": {  
       "baseMaps.CartoDB.Dark Matter": true  
     },
-    "appBarTitle": "xcube Viewer",
+    "appBarTitle": "xcube small change",
     "windowTitle": "xcube Viewer",
     "headerBackgroundColor": "#606060",
     "headerIconStyle":{
