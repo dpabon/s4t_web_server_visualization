@@ -5,7 +5,7 @@ services:
       context: .
       dockerfile: Dockerfile
     volumes:
-      - /media/s4t/data/2018_LST_s4t.zarr:/data/data.zarr
+      - /media/data/2018_LST_s4t.zarr:/data/data.zarr
     ports:
       - "80:80"
     restart: unless-stopped
