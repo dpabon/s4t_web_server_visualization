@@ -9,7 +9,7 @@
     "layerVisibilities": {  
       "baseMaps.CartoDB.Dark Matter": true  
     },
-    "appBarTitle": "xcube small change",
+    "appBarTitle": "The potential impact of Land Cover Changes on the Daily cycle dynamics of Land Surface Temperature",
     "windowTitle": "xcube Viewer",
     "headerBackgroundColor": "#606060",
     "headerIconStyle":{
