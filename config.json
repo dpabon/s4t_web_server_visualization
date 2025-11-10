@@ -17,8 +17,8 @@
     },
     "themeMode": "dark",
     "compact": false,
-    "organisationUrl": "https://xcube.readthedocs.io/",
-    "logoImage": "images/logo.png",
+    "organisationUrl": "https://earthmonitor.org/use-cases/tool-to-estimate-local-temperatures-changes-following-an-increase-in-forest-cover/",
+    "logoImage": "images/OEMC_Logo.png",
     "logoWidth": 32,
     "headerTitleStyle": {
       "fontFamily": "Roboto, Segoe UI, Helvetica, Arial, sans-serif",

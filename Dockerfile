@@ -7,6 +7,8 @@ RUN git clone https://github.com/xcube-dev/xcube-viewer.git
 
 COPY config.json ./xcube-viewer/src/resources/config.json
 
+COPY OEMC_Logo.png ./xcube-viewer/public/images/OEMC_Logo.png
+
 RUN cd xcube-viewer && npm install && npm run build 
 
 RUN git clone https://github.com/xcube-dev/xcube.git
