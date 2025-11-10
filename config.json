@@ -15,7 +15,7 @@
     "headerIconStyle":{
       "color": "#FFFFFF"
     },
-    "themeMode": "system",
+    "themeMode": "dark",
     "compact": false,
     "organisationUrl": "https://xcube.readthedocs.io/",
     "logoImage": "images/logo.png",
