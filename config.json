@@ -19,7 +19,7 @@
     "compact": false,
     "organisationUrl": "https://earthmonitor.org/use-cases/tool-to-estimate-local-temperatures-changes-following-an-increase-in-forest-cover/",
     "logoImage": "images/OEMC_Logo.png",
-    "logoWidth": 32,
+    "logoWidth": 40,
     "headerTitleStyle": {
       "fontFamily": "Roboto, Segoe UI, Helvetica, Arial, sans-serif",
       "fontSize": "1.2rem"
