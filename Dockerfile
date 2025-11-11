@@ -1,4 +1,4 @@
-FROM continuumio/miniconda3
+FROM condaforge/miniforge3
 WORKDIR /app
 RUN apt update
 RUN apt install -y npm
