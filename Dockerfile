@@ -19,12 +19,8 @@ RUN  cp -rf ./xcube-viewer/dist ./xcube/xcube/webapi/viewer/
 
 RUN conda env update --file ./xcube/environment.yml --prune --name base
 
-#RUN pip install numcodecs==0.15.1
-
 RUN pip install -ve ./xcube
 
-# fix projsee https://github.com/conda-forge/geopandas-feedstock/issues/63
-#ENV PROJ_LIB=/opt/conda/share/proj
 
 EXPOSE 80
 
