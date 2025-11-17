@@ -6,7 +6,6 @@
 
 import { TooltipProps } from "recharts";
 import { Payload as TooltipPayload } from "recharts/types/component/DefaultTooltipContent";
-
 import { utcTimeToIsoDateTimeString } from "@/util/time";
 import { isNumber } from "@/util/types";
 import { makeStyles } from "@/util/styles";
@@ -43,12 +42,35 @@ export default function CustomTooltip({
   if (!active) {
     return null;
   }
- if (!label && label !== 0) {
-    return null;
-  }
 
   if (!payload || payload.length === 0) {
     return null;
+  }
+
+  // Extract the actual time value from the payload data
+  let timeValue: number | null = null;
+  let labelText = "";
+  
+  if (payload && payload.length > 0 && payload[0].payload) {
+    // Get the time from the data point
+    const dataPoint = payload[0].payload;
+    if (typeof dataPoint.time === "number") {
+      timeValue = dataPoint.time;
+      labelText = utcTimeToIsoDateTimeString(timeValue);
+    } else if (typeof dataPoint.timeLabel === "string") {
+      labelText = dataPoint.timeLabel;
+    }
+  }
+  
+  // Fallback to label if we couldn't extract time
+  if (!labelText) {
+    if (typeof label === "string") {
+      labelText = label;
+    } else if (isNumber(label)) {
+      labelText = utcTimeToIsoDateTimeString(label);
+    } else {
+      labelText = String(label);
+    }
   }
 
   const items = payload.map(
@@ -85,24 +107,14 @@ export default function CustomTooltip({
     },
   );
 
-  if (!items) {
+  if (!items || items.every(item => item === null)) {
     return null;
-  }
-  let labelText;
-  if (typeof label === "string") {
-    // Label is already formatted (categorical axis)
-    labelText = label;
-  } else if (isNumber(label)) {
-    // Label is a timestamp (numeric axis)
-    labelText = utcTimeToIsoDateTimeString(label);
-  } else {
-    labelText = String(label);
   }
 
   return (
     <Box sx={styles.toolTipContainer}>
       <Box component="span" sx={styles.toolTipLabel}>
-        {labelText} {typeof label === "number" ? "UTC" : ""}
+        {labelText} {timeValue ? "UTC" : ""}
       </Box>
       {items}
     </Box>
