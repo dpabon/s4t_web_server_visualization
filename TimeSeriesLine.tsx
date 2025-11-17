@@ -15,7 +15,7 @@ import {
   TimeSeriesGroup,
 } from "@/model/timeSeries";
 import { TimeSeriesChartType } from "@/states/controlState";
-import CustomDot from "./CustomDot";
+//import CustomDot from "./CustomDot";
 
 interface TimeSeriesLineProps {
   timeSeriesGroup: TimeSeriesGroup;
@@ -99,25 +99,10 @@ export default function TimeSeriesLine({
   const shadedLineColor = getUserPlaceColor(lineColor, paletteMode);
 
   let strokeOpacity;
-  let dotProps: {
-    radius: number;
-    strokeWidth: number;
-    symbol: "diamond" | "circle";
-  };
   if (timeSeries.source.placeId === null) {
     strokeOpacity = 0;
-    dotProps = {
-      radius: 5,
-      strokeWidth: 1.5,
-      symbol: "diamond",
-    };
   } else {
     strokeOpacity = chartType === "point" ? 0 : timeSeries.dataProgress;
-    dotProps = {
-      radius: 3,
-      strokeWidth: 2,
-      symbol: "circle",
-    };
   }
 
   const errorBar = stdevBars && source.valueDataKey && source.errorDataKey && (
