@@ -5,18 +5,16 @@
  */
 
 import { isNumber } from "@/util/types";
-//import { utcTimeToIsoDateString } from "@/util/time";
 
-// Helper function to format time with date and time (HH:MM) without seconds
+// Helper function to format time as YYYY-MM HH:MM (without day and seconds)
 const formatDateTimeWithoutSeconds = (time: number): string => {
   const date = new Date(time);
   const year = date.getUTCFullYear();
   const month = String(date.getUTCMonth() + 1).padStart(2, '0');
-  const day = String(date.getUTCDate()).padStart(2, '0');
   const hours = String(date.getUTCHours()).padStart(2, '0');
   const minutes = String(date.getUTCMinutes()).padStart(2, '0');
   
-  return `${year}-${month}-${day} ${hours}:${minutes}`;
+  return `${year}-${month} ${hours}:${minutes}`;
 };
 
 export const formatTimeTick = (value: number | string) => {
