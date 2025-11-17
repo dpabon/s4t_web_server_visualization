@@ -323,14 +323,18 @@ export default function TimeSeriesChart({
         selectTimeRange(actualTimeRange, timeSeriesGroup.id, null);
       }
     } else if (
-      chartState &&
-      isNumber(chartState.activeLabel) &&
-      Number.isFinite(chartState.activeLabel)
+        chartState &&
+        chartState.activeLabel !== undefined &&
+        chartState.activeLabel !== null
     ) {
-        const timeValues = data.map(d => d.time as number);
-        const selectedTimeValue = timeValues[Math.floor(chartState.activeLabel)];
-        if (selectedTimeValue !== undefined) {
-            selectTime(selectedTimeValue);
+        // activeLabel is now the categorical label (timeLabel string)
+        // Find the data point with matching timeLabel
+        const clickedDataPoint = filteredData.find(
+        d => d.timeLabel === chartState.activeLabel
+        );
+        
+        if (clickedDataPoint && typeof clickedDataPoint.time === "number") {
+        selectTime(clickedDataPoint.time);
         }
     }
   };
@@ -557,16 +561,20 @@ export default function TimeSeriesChart({
             />
           )}
           {selectedTime !== null && (() => {
-            const selectedIndex = filteredData.findIndex(d => d.time === selectedTime);
-            return selectedIndex >= 0 ? (
+            // Find the timeLabel that corresponds to selectedTime
+            const selectedDataPoint = filteredData.find(d => d.time === selectedTime);
+            if (selectedDataPoint && selectedDataPoint.timeLabel) {
+                return (
                 <ReferenceLine
-                isFront={true}
-                x={selectedIndex}  // Use index instead of time value
-                stroke={mainStroke}
-                strokeWidth={3}
-                strokeOpacity={0.5}
+                    isFront={true}
+                    x={selectedDataPoint.timeLabel}  // Use the timeLabel string
+                    stroke={mainStroke}
+                    strokeWidth={3}
+                    strokeOpacity={0.5}
                 />
-            ) : null;
+                );
+            }
+            return null;
             })()}
         </ChartComponent>
       </ResponsiveContainer>
