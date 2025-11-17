@@ -141,6 +141,7 @@ export default function TimeSeriesLine({
         false
       }
       stroke={shadedLineColor}
+      strokeWidth={1.5}
       strokeOpacity={strokeOpacity}
       isAnimationActive={false}
       onClick={handleClick}

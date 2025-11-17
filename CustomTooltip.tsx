@@ -44,31 +44,30 @@ export default function CustomTooltip({
   }
 
   if (!payload || payload.length === 0) {
-  return null;
-    }
+    return null;
+  }
 
-// Extract the actual time value from the payload data
-    let timeValue: number | null = null;
-    let labelText = "";
+  // Extract the actual time value from the payload data
+  let timeValue: number | null = null;
+  let labelText = "";
 
-    if (payload && payload.length > 0 && payload[0].payload) {
+  if (payload && payload.length > 0 && payload[0].payload) {
     // Get the time from the data point
     const dataPoint = payload[0].payload;
     if (typeof dataPoint.time === "number") {
-        timeValue = dataPoint.time;
-        labelText = utcTimeToIsoDateTimeString(timeValue);  // Safe: timeValue is confirmed to be number
+      timeValue = dataPoint.time;
+      labelText = utcTimeToIsoDateTimeString(timeValue);
     } else if (typeof dataPoint.timeLabel === "string") {
-        labelText = dataPoint.timeLabel;
+      labelText = dataPoint.timeLabel;
     }
-    }
+  }
 
-  
   // Fallback to label if we couldn't extract time
   if (!labelText) {
     if (typeof label === "string") {
       labelText = label;
-    } else if (isNumber(label)) {
-      labelText = utcTimeToIsoDateTimeString(label);
+    } else if (isNumber(label) && label !== null) {  // FIXED: Added explicit null check
+      labelText = utcTimeToIsoDateTimeString(label as number);  // FIXED: Type assertion
     } else {
       labelText = String(label);
     }
