@@ -142,7 +142,6 @@ export default function TimeSeriesChart({
   const [chartType, setChartType] = useState(chartTypeDefault);
   const [stdevBars, setStdevBars] = useState(includeStdev);
   const [zoomRectangle, setZoomRectangle] = useState<Rectangle>({});
-  const xDomain = useRef<[number, number]>();
   const yDomain = useRef<[number, number]>();
   const chartSize = useRef<[number, number]>();
   const chartContainerRef = useRef<HTMLDivElement | null>(null);
@@ -186,19 +185,6 @@ export default function TimeSeriesChart({
     });
     return dataArray;
   }, [timeSeriesGroup]);
-
-    // Helper to find index for a given time value
-    const getIndexForTime = (timeValue: number): number => {
-    const timeValues = data.map(d => d.time as number);
-    return timeValues.findIndex(t => t === timeValue);
-    };
-
-    // Helper to get time range from data
-    const actualTimeRange = useMemo<TimeRange | null>(() => {
-    if (data.length === 0) return null;
-    const times = data.map(d => d.time as number).sort((a, b) => a - b);
-    return [times[0], times[times.length - 1]];
-    }, [data]);
 
   const completed = useMemo(
     () =>
