@@ -63,15 +63,15 @@ export default function CustomTooltip({
   }
 
   // Fallback to label if we couldn't extract time
-  if (!labelText) {
+    if (!labelText) {
     if (typeof label === "string") {
-      labelText = label;
-    } else if (isNumber(label) && label !== null) {  // FIXED: Added explicit null check
-      labelText = utcTimeToIsoDateTimeString(label as number);  // FIXED: Type assertion
+        labelText = label;
+    } else if (typeof label === "number") {  // CHANGED: Use typeof instead of isNumber
+        labelText = utcTimeToIsoDateTimeString(label);
     } else {
-      labelText = String(label);
+        labelText = String(label ?? "");  // CHANGED: Handle null/undefined
     }
-  }
+    }
 
   const items = payload.map(
     (p: TooltipPayload<number, string>, index: number) => {
