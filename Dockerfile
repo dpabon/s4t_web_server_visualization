@@ -9,6 +9,8 @@ COPY config.json ./xcube-viewer/src/resources/config.json
 
 COPY TimeSeriesChart.tsx ./xcube-viewer/src/components/TimeSeriesPanel/TimeSeriesChart.tsx
 
+COPY TimeSeriesLine.tsx ./xcube-viewer/src/components/TimeSeriesPanel/TimeSeriesLine.tsx
+
 COPY OEMC_Logo.png ./xcube-viewer/public/images/OEMC_Logo.png
 
 RUN cd xcube-viewer && npm install && npm run build 
