@@ -157,9 +157,9 @@ export default function TimeSeriesChart({
       ts.data.forEach((tsp) => {
         const oldP = dataMap.get(tsp.time);
         let newP: Record<string, number | string>;
-        let newP: Record<string, number>;
         if (oldP === undefined) {
-          newP = { time: tsp.time,
+          newP = { 
+            time: tsp.time,
             timeLabel: formatTimeTick(tsp.time)
            };
           dataMap.set(tsp.time, newP);
@@ -178,9 +178,13 @@ export default function TimeSeriesChart({
         }
       });
     });
-    const data = Array.from(dataMap.values());
-    data.sort((p1, p2) => p1.time - p2.time);
-    return data;
+    const dataArray = Array.from(dataMap.values());
+    dataArray.sort((p1, p2) => {
+    const time1 = p1.time as number;
+    const time2 = p2.time as number;
+    return time1 - time2;
+    });
+    return dataArray;
   }, [timeSeriesGroup]);
 
   const completed = useMemo(
