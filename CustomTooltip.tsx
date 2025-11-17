@@ -56,7 +56,7 @@ export default function CustomTooltip({
   const dataPoint = payload[0].payload;
   if (typeof dataPoint.time === "number") {
     timeValue = dataPoint.time;
-    labelText = utcTimeToIsoDateTimeString(dataPoint.time);  // CHANGED: Use dataPoint.time directly
+    labelText = utcTimeToIsoDateTimeString(dataPoint.time);  
   } else if (typeof dataPoint.timeLabel === "string") {
     labelText = dataPoint.timeLabel;
     }
@@ -72,7 +72,6 @@ export default function CustomTooltip({
         labelText = String(label ?? "");
     }
     }
-
 
   const items = payload.map(
     (p: TooltipPayload<number, string>, index: number) => {
