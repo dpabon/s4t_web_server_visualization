@@ -186,6 +186,17 @@ export default function TimeSeriesChart({
     return dataArray;
   }, [timeSeriesGroup]);
 
+  const filteredData = useMemo(() => {
+  if (!selectedTimeRange) {
+    return data;
+  }
+  const [startTime, endTime] = selectedTimeRange;
+    return data.filter((d) => {
+        const time = d.time as number;
+        return time >= startTime && time <= endTime;
+    });
+    }, [data, selectedTimeRange]);
+
   const completed = useMemo(
     () =>
       timeSeriesGroup.timeSeriesArray.map((ts) =>
@@ -421,7 +432,7 @@ export default function TimeSeriesChart({
     const wx = (chartX - MARGIN_LEFT) / cartesianGridWidth;
     const wy = (chartY - MARGIN_TOP) / cartesianGridHeight;
     
-    const xIndex = wx * (data.length - 1);
+    const xIndex = wx * (filteredData.length - 1);
     // Find margin --> wx,wy must be in range 0...1
     // console.log("-------------------------------------------");
     // console.log("wx, wy:", wx, wy);
@@ -473,7 +484,7 @@ export default function TimeSeriesChart({
           // onClick={handleClick}
           syncId="anyId"
           style={{ color: labelTextColor, fontSize: "0.7rem" }}
-          data={data}
+          data={filteredData}
           barGap={1}
           barSize={30}
           maxBarSize={30}
@@ -546,7 +557,7 @@ export default function TimeSeriesChart({
             />
           )}
           {selectedTime !== null && (() => {
-            const selectedIndex = data.findIndex(d => d.time === selectedTime);
+            const selectedIndex = filteredData.findIndex(d => d.time === selectedTime);
             return selectedIndex >= 0 ? (
                 <ReferenceLine
                 isFront={true}
