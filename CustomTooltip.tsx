@@ -6,7 +6,6 @@
 
 import { TooltipProps } from "recharts";
 import { Payload as TooltipPayload } from "recharts/types/component/DefaultTooltipContent";
-import { utcTimeToIsoDateTimeString } from "@/util/time";
 import { isNumber } from "@/util/types";
 import { makeStyles } from "@/util/styles";
 import Box from "@mui/material/Box";
@@ -32,6 +31,16 @@ const styles = makeStyles({
 const INVISIBLE_LINE_COLOR = "#00000000";
 const SUBSTITUTE_LABEL_COLOR = "#FAFFDD";
 
+const formatDateTimeWithoutSeconds = (time: number): string => {
+  const date = new Date(time);
+  const year = date.getUTCFullYear();
+  const month = String(date.getUTCMonth() + 1).padStart(2, '0');
+  const hours = String(date.getUTCHours()).padStart(2, '0');
+  const minutes = String(date.getUTCMinutes()).padStart(2, '0');
+  
+  return `${year}-${month} ${hours}:${minutes}`;
+};
+
 type CustomTooltipProps = TooltipProps<number, string>;
 
 export default function CustomTooltip({
@@ -52,26 +61,26 @@ export default function CustomTooltip({
   let labelText = "";
 
   if (payload && payload.length > 0 && payload[0].payload) {
-  // Get the time from the data point
-  const dataPoint = payload[0].payload;
-  if (typeof dataPoint.time === "number") {
-    timeValue = dataPoint.time;
-    labelText = utcTimeToIsoDateTimeString(dataPoint.time);  
-  } else if (typeof dataPoint.timeLabel === "string") {
-    labelText = dataPoint.timeLabel;
+    // Get the time from the data point
+    const dataPoint = payload[0].payload;
+    if (typeof dataPoint.time === "number") {
+      timeValue = dataPoint.time;
+      labelText = formatDateTimeWithoutSeconds(dataPoint.time);  // CHANGED: Use our format function
+    } else if (typeof dataPoint.timeLabel === "string") {
+      labelText = dataPoint.timeLabel;
     }
-    }
+  }
 
-    // Fallback to label if we couldn't extract time
-    if (!labelText) {
+  // Fallback to label if we couldn't extract time
+  if (!labelText) {
     if (typeof label === "string") {
-        labelText = label;
+      labelText = label;
     } else if (typeof label === "number") {
-        labelText = utcTimeToIsoDateTimeString(label);
+      labelText = formatDateTimeWithoutSeconds(label);  // CHANGED: Use our format function
     } else {
-        labelText = String(label ?? "");
+      labelText = String(label ?? "");
     }
-    }
+  }
 
   const items = payload.map(
     (p: TooltipPayload<number, string>, index: number) => {
