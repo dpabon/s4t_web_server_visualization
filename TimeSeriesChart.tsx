@@ -73,6 +73,19 @@ const Y_AXIS_LABEL = {
   offset: 0,
 };
 
+// Helper to find index for a given time value
+const getIndexForTime = (timeValue: number): number => {
+  const timeValues = data.map(d => d.time as number);
+  return timeValues.findIndex(t => t === timeValue);
+};
+
+// Helper to get time range from data
+const actualTimeRange = useMemo<TimeRange | null>(() => {
+  if (data.length === 0) return null;
+  const times = data.map(d => d.time as number).sort((a, b) => a - b);
+  return [times[0], times[times.length - 1]];
+}, [data]);
+
 interface TimeSeriesChartProps extends WithLocale {
   timeSeriesGroup: TimeSeriesGroup;
   selectedTime: Time | null;
@@ -297,17 +310,31 @@ export default function TimeSeriesChart({
     removeZoomRectangle();
 
     if (selectedXRange1 && selectedXRange1[0] < selectedXRange1[1]) {
+        const timeValues = data.map(d => d.time as number).sort((a, b) => a - b);
+
+        const startIndex = Math.max(0, Math.floor(selectedXRange1[0]));
+        const endIndex = Math.min(timeValues.length - 1, Math.ceil(selectedXRange1[1]));
+
+        const actualTimeRange: TimeRange = [
+            timeValues[startIndex],
+            timeValues[endIndex]
+            ];
+
       if (selectedYRange1) {
-        selectTimeRange(selectedXRange1, timeSeriesGroup.id, selectedYRange1);
+        selectTimeRange(actualTimeRange, timeSeriesGroup.id, selectedYRange1);
       } else {
-        selectTimeRange(selectedXRange1, timeSeriesGroup.id, null);
+        selectTimeRange(actualTimeRange, timeSeriesGroup.id, null);
       }
     } else if (
       chartState &&
       isNumber(chartState.activeLabel) &&
       Number.isFinite(chartState.activeLabel)
     ) {
-      selectTime(chartState.activeLabel);
+        const timeValues = data.map(d => d.time as number);
+        const selectedTimeValue = timeValues[Math.floor(chartState.activeLabel)];
+        if (selectedTimeValue !== undefined) {
+            selectTime(selectedTimeValue);
+        }
     }
   };
 
@@ -395,7 +422,7 @@ export default function TimeSeriesChart({
     const MARGIN_BOTTOM = 38;
     const ONE_ROW_LEGEND_HEIGHT = 20;
     //
-    const [xMin, xMax] = xDomain.current;
+    //const [xMin, xMax] = xDomain.current;
     const [yMin, yMax] = yDomain.current;
     const [chartWidth, chartHeight] = chartSize.current;
     const legendWrapperEl = legendWrapperRef.current;
@@ -407,10 +434,12 @@ export default function TimeSeriesChart({
       chartHeight - MARGIN_TOP - MARGIN_BOTTOM - legendHeight;
     const wx = (chartX - MARGIN_LEFT) / cartesianGridWidth;
     const wy = (chartY - MARGIN_TOP) / cartesianGridHeight;
+    
+    const xIndex = wx * (data.length - 1);
     // Find margin --> wx,wy must be in range 0...1
     // console.log("-------------------------------------------");
     // console.log("wx, wy:", wx, wy);
-    return [xMin + wx * (xMax - xMin), yMax - wy * (yMax - yMin)];
+    return [xIndex, yMax - wy * (yMax - yMin)];
   };
 
   const [selectedXRange, selectedYRange] =
@@ -513,6 +542,12 @@ export default function TimeSeriesChart({
               paletteMode: theme.palette.mode,
             }),
           )}
+          {/* Reference line at y = 0 */}
+            <ReferenceLine
+            y={0}
+            stroke={theme.palette.common.white}
+            strokeWidth={1.5}
+            />
           {selectedXRange && (
             <ReferenceArea
               x1={selectedXRange[0]}
@@ -524,15 +559,18 @@ export default function TimeSeriesChart({
               fillOpacity={0.3}
             />
           )}
-          {selectedTime !== null && (
-            <ReferenceLine
-              isFront={true}
-              x={selectedTime}
-              stroke={mainStroke}
-              strokeWidth={3}
-              strokeOpacity={0.5}
-            />
-          )}
+          {selectedTime !== null && (() => {
+            const selectedIndex = data.findIndex(d => d.time === selectedTime);
+            return selectedIndex >= 0 ? (
+                <ReferenceLine
+                isFront={true}
+                x={selectedIndex}  // Use index instead of time value
+                stroke={mainStroke}
+                strokeWidth={3}
+                strokeOpacity={0.5}
+                />
+            ) : null;
+            })()}
         </ChartComponent>
       </ResponsiveContainer>
     </StyledContainerDiv>
