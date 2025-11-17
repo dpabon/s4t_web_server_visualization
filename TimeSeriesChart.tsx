@@ -457,7 +457,7 @@ export default function TimeSeriesChart({
         >
           <XAxis
             dataKey="time"
-            type="category"
+            type="number"
             tickCount={6}
             domain={getXDomain}
             tickFormatter={formatTimeTick}
