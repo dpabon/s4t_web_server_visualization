@@ -148,7 +148,7 @@ export default function TimeSeriesChart({
   const chartContainerRef = useRef<HTMLDivElement | null>(null);
   const legendWrapperRef = useRef<HTMLDivElement | null>(null);
   const data = useMemo(() => {
-    const dataMap = new Map<number, Record<string, number>>();
+    const dataMap = new Map<number, Record<string, number | string>>();
     timeSeriesGroup.timeSeriesArray.forEach((ts, i) => {
       const newValueDataKey = `v${i}`;
       const newErrorDataKey = `ev${i}`;
@@ -347,7 +347,7 @@ export default function TimeSeriesChart({
     chartSize.current = [w, h];
     updateLegendWrapperRef();
   };
-
+  /*
   const getXDomain = ([dataMin, dataMax]: [number, number]) => {
     const padding = (dataMax - dataMin) * 0.1;
     if (selectedTimeRange) {
@@ -357,6 +357,7 @@ export default function TimeSeriesChart({
     }
     return xDomain.current;
   };
+  */
 
   const getYDomain = ([dataMin, dataMax]: [number, number]) => {
     const padding = (dataMax - dataMin) * 0.1;
