@@ -151,9 +151,9 @@ export default function TimeSeriesLine({
       name={lineName}
       unit={source.variableUnits}
       dataKey={`v${timeSeriesIndex}`}
-      dot={<CustomDot {...dotProps} stroke={shadedLineColor} fill={"white"} />}
+      dot={false}
       activeDot={
-        <CustomDot {...dotProps} stroke={"white"} fill={shadedLineColor} />
+        false
       }
       stroke={shadedLineColor}
       strokeOpacity={strokeOpacity}
