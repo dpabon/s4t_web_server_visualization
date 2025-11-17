@@ -156,9 +156,12 @@ export default function TimeSeriesChart({
       const errorDataKey = ts.source.errorDataKey;
       ts.data.forEach((tsp) => {
         const oldP = dataMap.get(tsp.time);
+        let newP: Record<string, number | string>;
         let newP: Record<string, number>;
         if (oldP === undefined) {
-          newP = { time: tsp.time };
+          newP = { time: tsp.time,
+            timeLabel: formatTimeTick(tsp.time)
+           };
           dataMap.set(tsp.time, newP);
         } else {
           newP = oldP;
@@ -456,13 +459,16 @@ export default function TimeSeriesChart({
           maxBarSize={30}
         >
           <XAxis
-            dataKey="time"
-            type="number"
-            tickCount={6}
-            domain={getXDomain}
-            tickFormatter={formatTimeTick}
+            dataKey="timeLabel"
+            type="category"
+            //tickCount={6}
+            //domain={getXDomain}
+            //tickFormatter={formatTimeTick}
             stroke={labelTextColor}
-            allowDataOverflow
+            angle={-45}
+            textAnchor="end"
+            height={80}
+            //allowDataOverflow
           />
           <YAxis
             type="number"
