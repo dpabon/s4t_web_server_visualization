@@ -44,23 +44,24 @@ export default function CustomTooltip({
   }
 
   if (!payload || payload.length === 0) {
-    return null;
-  }
+  return null;
+    }
 
-  // Extract the actual time value from the payload data
-  let timeValue: number | null = null;
-  let labelText = "";
-  
-  if (payload && payload.length > 0 && payload[0].payload) {
+// Extract the actual time value from the payload data
+    let timeValue: number | null = null;
+    let labelText = "";
+
+    if (payload && payload.length > 0 && payload[0].payload) {
     // Get the time from the data point
     const dataPoint = payload[0].payload;
     if (typeof dataPoint.time === "number") {
-      timeValue = dataPoint.time;
-      labelText = utcTimeToIsoDateTimeString(timeValue);
+        timeValue = dataPoint.time;
+        labelText = utcTimeToIsoDateTimeString(timeValue);  // Safe: timeValue is confirmed to be number
     } else if (typeof dataPoint.timeLabel === "string") {
-      labelText = dataPoint.timeLabel;
+        labelText = dataPoint.timeLabel;
     }
-  }
+    }
+
   
   // Fallback to label if we couldn't extract time
   if (!labelText) {
