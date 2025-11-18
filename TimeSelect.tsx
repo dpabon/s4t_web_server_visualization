@@ -60,7 +60,10 @@ const _TimeSelect: React.FC<TimeSelectProps> = ({
     maxTimeValue = utcTimeToLocal(selectedTimeRange[1]);
   }
 
+<<<<<<< HEAD
   // ADD THIS: Check if the selected time has hour/minute information
+=======
+>>>>>>> 272d5d5 (minor comment removed)
   const hasTimeOfDay = React.useMemo(() => {
     if (!timeValue) return false;
     const hours = timeValue.getHours();
