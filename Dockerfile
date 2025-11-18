@@ -15,6 +15,8 @@ COPY CustomTooltip.tsx ./xcube-viewer/src/components/TimeSeriesPanel/CustomToolt
 
 COPY util.ts ./xcube-viewer/src/components/TimeSeriesPanel/util.ts
 
+COPY TimeSelect.tsx ./xcube-viewer/src/components/TimeSelect.tsx
+
 COPY OEMC_Logo.png ./xcube-viewer/public/images/OEMC_Logo.png
 
 RUN cd xcube-viewer && npm install && npm run build 
