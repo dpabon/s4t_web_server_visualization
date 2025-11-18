@@ -16,10 +16,15 @@ Datasets:
     Path: /data/data.zarr
     Style: default
     TimeSeriesDataset: local_ts
-    #layerVisibilities: 
-      #baseMaps.CartoDB.Dark Matter: true  
-    #Variables:
-
+     Variables:
+      - "LST_delta_TREES to GRASS"
+#PlaceGroups:
+#  - Identifier: inside-cube
+#    Title: Places inside the cube
+#    Path: places/inside-cube.geojson
+#    Join:
+#      Property: ID
+#      Path: places/inside-cube-media.geojson
 #Styles:
 #  - Identifier: default
   
