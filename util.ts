@@ -6,15 +6,27 @@
 
 import { isNumber } from "@/util/types";
 
-// Helper function to format time as YYYY-MM HH:MM (without day and seconds)
+// Helper function to format time intelligently
+// Shows YYYY-MM-DD HH:MM if time is present, otherwise just YYYY-MM-DD
 const formatDateTimeWithoutSeconds = (time: number): string => {
   const date = new Date(time);
   const year = date.getUTCFullYear();
   const month = String(date.getUTCMonth() + 1).padStart(2, '0');
-  const hours = String(date.getUTCHours()).padStart(2, '0');
-  const minutes = String(date.getUTCMinutes()).padStart(2, '0');
+  const day = String(date.getUTCDate()).padStart(2, '0');
+  const hours = date.getUTCHours();
+  const minutes = date.getUTCMinutes();
   
-  return `${year}-${month} ${hours}:${minutes}`;
+  // Check if there's actual time information (not midnight 00:00)
+  const hasTime = hours !== 0 || minutes !== 0;
+  
+  if (hasTime) {
+    const hoursStr = String(hours).padStart(2, '0');
+    const minutesStr = String(minutes).padStart(2, '0');
+    return `${year}-${month}-${day} ${hoursStr}:${minutesStr}`;
+  } else {
+    // Only date, no time
+    return `${year}-${month}-${day}`;
+  }
 };
 
 export const formatTimeTick = (value: number | string) => {

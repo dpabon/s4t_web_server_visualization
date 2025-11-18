@@ -31,14 +31,27 @@ const styles = makeStyles({
 const INVISIBLE_LINE_COLOR = "#00000000";
 const SUBSTITUTE_LABEL_COLOR = "#FAFFDD";
 
+// Helper function to format time intelligently
+// Shows YYYY-MM-DD HH:MM if time is present, otherwise just YYYY-MM-DD
 const formatDateTimeWithoutSeconds = (time: number): string => {
   const date = new Date(time);
   const year = date.getUTCFullYear();
   const month = String(date.getUTCMonth() + 1).padStart(2, '0');
-  const hours = String(date.getUTCHours()).padStart(2, '0');
-  const minutes = String(date.getUTCMinutes()).padStart(2, '0');
+  const day = String(date.getUTCDate()).padStart(2, '0');
+  const hours = date.getUTCHours();
+  const minutes = date.getUTCMinutes();
   
-  return `${year}-${month} ${hours}:${minutes}`;
+  // Check if there's actual time information (not midnight 00:00)
+  const hasTime = hours !== 0 || minutes !== 0;
+  
+  if (hasTime) {
+    const hoursStr = String(hours).padStart(2, '0');
+    const minutesStr = String(minutes).padStart(2, '0');
+    return `${year}-${month}-${day} ${hoursStr}:${minutesStr}`;
+  } else {
+    // Only date, no time
+    return `${year}-${month}-${day}`;
+  }
 };
 
 type CustomTooltipProps = TooltipProps<number, string>;
@@ -65,7 +78,7 @@ export default function CustomTooltip({
     const dataPoint = payload[0].payload;
     if (typeof dataPoint.time === "number") {
       timeValue = dataPoint.time;
-      labelText = formatDateTimeWithoutSeconds(dataPoint.time);  // CHANGED: Use our format function
+      labelText = formatDateTimeWithoutSeconds(dataPoint.time);
     } else if (typeof dataPoint.timeLabel === "string") {
       labelText = dataPoint.timeLabel;
     }
@@ -76,7 +89,7 @@ export default function CustomTooltip({
     if (typeof label === "string") {
       labelText = label;
     } else if (typeof label === "number") {
-      labelText = formatDateTimeWithoutSeconds(label);  // CHANGED: Use our format function
+      labelText = formatDateTimeWithoutSeconds(label);
     } else {
       labelText = String(label ?? "");
     }
