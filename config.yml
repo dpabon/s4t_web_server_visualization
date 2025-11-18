@@ -16,7 +16,7 @@ Datasets:
     Path: /data/data.zarr
     Style: default
     TimeSeriesDataset: local_ts
-     Variables:
+    Variables:
       - "LST_delta_TREES to GRASS"
 #PlaceGroups:
 #  - Identifier: inside-cube
