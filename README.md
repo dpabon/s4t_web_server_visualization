@@ -1,5 +1,7 @@
 # Tool to estimate local temperatures changes following an increase in forest cover (Visualization results)
 
+![example](example.png) 
+
 This repository deploys the web server for the visualization of the "Tool to estimate local temperatures changes following an increase in forest cover". Part of the [Open Earth Monitor Project](https://earthmonitor.org/). For visualization the [xcube-viewer](https://github.com/xcube-dev/xcube-viewer) is deployed with multiple changes to support 15 minutes temporal resolution and monthly composites, these changes are mainly implemented internaly handling the time dimension as a categorical variable.
 
 The visualizer is deployed in the following link: http://141.5.123.133/viewer/?serverUrl=http://141.5.123.133:80&serverId=local&serverName=Local (setting up a propper https domain is in progress).
