@@ -22,11 +22,9 @@ Datasets:
       - PlaceGroupRef: inside-cube
 
 
-
-
 PlaceGroups:
   - Identifier: inside-cube
-    Title: Places inside the cube
+    Title: Countries
     Path: places/initial_places.geojson
 #Styles:
 #  - Identifier: default

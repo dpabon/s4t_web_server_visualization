@@ -14,10 +14,29 @@
         ]]
       },
       "properties": {
-        "Name": "Area 1",
+        "Name": "Germany",
         "ID": "0",
         "Sub_Region_Name": "Inside",
         "Region_Name": "Germany"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [[
+        [11.09, -5.04],
+        [18.65, -5.04],
+        [18.65, 3.70],
+        [11.09, 3.70],
+        [11.09, -5.04]
+        ]]
+      },
+      "properties": {
+        "Name": "Kongo",
+        "ID": "1",
+        "Sub_Region_Name": "Inside",
+        "Region_Name": "Kongo"
       }
     }
   ]
