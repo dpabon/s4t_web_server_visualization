@@ -18,6 +18,12 @@ Datasets:
     TimeSeriesDataset: local_ts
     Variables:
       - "LST_delta_TREES to GRASS"
+    PlaceGroups:
+      - PlaceGroupRef: inside-cube
+
+
+
+
 PlaceGroups:
   - Identifier: inside-cube
     Title: Places inside the cube
