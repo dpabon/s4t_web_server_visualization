@@ -18,13 +18,10 @@ Datasets:
     TimeSeriesDataset: local_ts
     Variables:
       - "LST_delta_TREES to GRASS"
-#PlaceGroups:
-#  - Identifier: inside-cube
-#    Title: Places inside the cube
-#    Path: places/inside-cube.geojson
-#    Join:
-#      Property: ID
-#      Path: places/inside-cube-media.geojson
+PlaceGroups:
+  - Identifier: inside-cube
+    Title: Places inside the cube
+    Path: places/initial_places.geojson
 #Styles:
 #  - Identifier: default
   
