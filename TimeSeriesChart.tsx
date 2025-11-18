@@ -549,17 +549,29 @@ export default function TimeSeriesChart({
             stroke={theme.palette.common.white}
             strokeWidth={1.5}
             />
-          {selectedXRange && (
-            <ReferenceArea
-              x1={selectedXRange[0]}
-              y1={selectedYRange ? selectedYRange[0] : undefined}
-              x2={selectedXRange[1]}
-              y2={selectedYRange ? selectedYRange[1] : undefined}
-              strokeOpacity={0.3}
-              fill={lightStroke}
-              fillOpacity={0.3}
-            />
-          )}
+          {selectedXRange && (() => {
+            // Convert indices to categorical labels
+            const startIndex = Math.floor(selectedXRange[0]);
+            const endIndex = Math.ceil(selectedXRange[1]);
+            
+            const startLabel = filteredData[startIndex]?.timeLabel;
+            const endLabel = filteredData[endIndex]?.timeLabel;
+            
+            if (startLabel && endLabel) {
+              return (
+                <ReferenceArea
+                  x1={startLabel}
+                  x2={endLabel}
+                  y1={selectedYRange ? selectedYRange[0] : undefined}
+                  y2={selectedYRange ? selectedYRange[1] : undefined}
+                  strokeOpacity={0.3}
+                  fill={lightStroke}
+                  fillOpacity={0.3}
+                />
+              );
+            }
+            return null;
+          })()}
           {selectedTime !== null && (() => {
             // Find the timeLabel that corresponds to selectedTime
             const selectedDataPoint = filteredData.find(d => d.time === selectedTime);
