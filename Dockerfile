@@ -31,9 +31,10 @@ RUN conda env update --file ./xcube/environment.yml --prune --name base
 
 RUN pip install -ve ./xcube
 
-
 EXPOSE 80
 
 COPY config.yml ./config.yml
+
+COPY places ./places
 
 CMD xcube serve -c config.yml /data/data.zarr -p 80
