@@ -124,7 +124,7 @@ export default function TimeSeriesLine({
       dataKey={`v${timeSeriesIndex}`}
       fill={shadedLineColor}
       fillOpacity={strokeOpacity}
-      isAnimationActive={false}
+      isAnimationActive={true}
       onClick={handleClick}
     >
       {errorBar}
@@ -136,10 +136,8 @@ export default function TimeSeriesLine({
       name={lineName}
       unit={source.variableUnits}
       dataKey={`v${timeSeriesIndex}`}
-      dot={false}
-      activeDot={
-        false
-      }
+      dot={{ r: 3, fill: '#8884d8' }}
+      activeDot={{ r: 5 }}
       stroke={shadedLineColor}
       strokeWidth={1.5}
       strokeOpacity={strokeOpacity}
