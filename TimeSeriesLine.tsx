@@ -99,6 +99,11 @@ export default function TimeSeriesLine({
   const shadedLineColor = getUserPlaceColor(lineColor, paletteMode);
 
   let strokeOpacity;
+  let dotProps: {
+    radius: number;
+    strokeWidth: number;
+    symbol: "diamond" | "circle";
+  };
   if (timeSeries.source.placeId === null) {
     strokeOpacity = 0;
   } else {
