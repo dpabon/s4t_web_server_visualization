@@ -106,8 +106,18 @@ export default function TimeSeriesLine({
   };
   if (timeSeries.source.placeId === null) {
     strokeOpacity = 0;
+    dotProps = {
+      radius: 5,
+      strokeWidth: 1.5,
+      symbol: "diamond",
+    };
   } else {
     strokeOpacity = chartType === "point" ? 0 : timeSeries.dataProgress;
+    dotProps = {
+      radius: 3,
+      strokeWidth: 2,
+      symbol: "circle",
+    };
   }
 
   const errorBar = stdevBars && source.valueDataKey && source.errorDataKey && (
