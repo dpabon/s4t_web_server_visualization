@@ -15,7 +15,7 @@ import {
   TimeSeriesGroup,
 } from "@/model/timeSeries";
 import { TimeSeriesChartType } from "@/states/controlState";
-//import CustomDot from "./CustomDot";
+import CustomDot from "./CustomDot";
 
 interface TimeSeriesLineProps {
   timeSeriesGroup: TimeSeriesGroup;
@@ -136,8 +136,10 @@ export default function TimeSeriesLine({
       name={lineName}
       unit={source.variableUnits}
       dataKey={`v${timeSeriesIndex}`}
-      dot={{ r: 3, fill: '#8884d8' }}
-      activeDot={{ r: 5 }}
+      dot={<CustomDot {...dotProps} stroke={shadedLineColor} fill={"white"} />}
+      activeDot={
+        <CustomDot {...dotProps} stroke={"white"} fill={shadedLineColor} />
+      }
       stroke={shadedLineColor}
       strokeWidth={1.5}
       strokeOpacity={strokeOpacity}
