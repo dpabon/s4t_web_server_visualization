@@ -21,7 +21,7 @@ COPY TimeSelect.tsx ./xcube-viewer/src/components/TimeSelect.tsx
 
 COPY OEMC_Logo.png ./xcube-viewer/public/images/OEMC_Logo.png
 
-RUN cd xcube-viewer && npm install && npm run build 
+RUN cd xcube-viewer && npm install && npm audit fix && npm run build 
 
 RUN git clone https://github.com/xcube-dev/xcube.git
 
