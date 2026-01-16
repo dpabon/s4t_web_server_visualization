@@ -19,7 +19,7 @@ COPY util.ts ./xcube-viewer/src/components/TimeSeriesPanel/util.ts
 
 COPY TimeSelect.tsx ./xcube-viewer/src/components/TimeSelect.tsx
 
-COPY controlState.tsx ./xcube-viewer/src/components/controlState.tsx
+COPY controlState.tsx ./xcube-viewer/src/states/controlState.tsx
 
 COPY OEMC_Logo.png ./xcube-viewer/public/images/OEMC_Logo.png
 
