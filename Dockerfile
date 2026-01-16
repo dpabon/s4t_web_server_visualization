@@ -19,6 +19,8 @@ COPY util.ts ./xcube-viewer/src/components/TimeSeriesPanel/util.ts
 
 COPY TimeSelect.tsx ./xcube-viewer/src/components/TimeSelect.tsx
 
+COPY controlState.tsx ./xcube-viewer/src/components/controlState.tsx
+
 COPY OEMC_Logo.png ./xcube-viewer/public/images/OEMC_Logo.png
 
 RUN cd xcube-viewer && npm install && npm audit fix && npm run build 
