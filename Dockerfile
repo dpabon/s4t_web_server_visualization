@@ -3,7 +3,9 @@ WORKDIR /app
 RUN apt update
 RUN apt install -y npm
 RUN npm install -g typescript
-RUN git clone https://github.com/xcube-dev/xcube-viewer/
+RUN git clone https://github.com/xcube-dev/xcube-viewer/ && \
+    cd xcube-viewer && \
+    git reset --hard d81bbcf31d324c4da140f4e3c7a371106c2fac5f
 
 COPY config.json ./xcube-viewer/src/resources/config.json
 
