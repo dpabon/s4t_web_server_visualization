@@ -21,9 +21,10 @@ COPY controlState.tsx ./xcube-viewer/src/states/controlState.tsx
 
 COPY OEMC_Logo.png ./xcube-viewer/public/images/OEMC_Logo.png
 
-RUN cd xcube-viewer && npm audit fix 
+RUN cd xcube-viewer && npm ci
 
-RUN cd xcube-viewer && npm install && npm run build 
+RUN cd xcube-viewer && npm build
+
 
 RUN git clone https://github.com/xcube-dev/xcube.git
 
