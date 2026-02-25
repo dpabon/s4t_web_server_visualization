@@ -17,7 +17,11 @@ Datasets:
     Style: default
     TimeSeriesDataset: local_ts
     Variables:
-      - "LST_delta_TREES to GRASS"
+      - "LST_delta_GRASS-MAN to TREES"
+      - "LST_delta_SHRUB to GRASS-MAN" 
+      - "LST_delta_SHRUB to GRASS-NAT"
+      - "LST_delta_SHRUB to TREES"
+      - "LST_delta_TREES to GRASS-NAT"
     PlaceGroups:
       - PlaceGroupRef: inside-cube
 
