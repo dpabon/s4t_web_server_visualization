@@ -28,7 +28,9 @@ RUN cd xcube-viewer && npm ci
 RUN cd xcube-viewer && npm run build
 
 
-RUN git clone https://github.com/xcube-dev/xcube.git
+RUN git clone https://github.com/xcube-dev/xcube.git && \
+    cd xcube && \
+    git reset --hard 302957514d11b01b40b90c09fb209910b8917a7d
 
 RUN echo $(ls -1 ./xcube-viewer/)
 
