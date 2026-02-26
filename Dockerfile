@@ -37,10 +37,10 @@ RUN echo $(ls -1 ./xcube-viewer/)
 RUN  cp -rf ./xcube-viewer/dist ./xcube/xcube/webapi/viewer/
 
 RUN cd ./xcube && \
-    conda init .
+    conda init
 
 RUN conda activate ./xcube && \
-    pip install -ve
+    pip install -ve ./xcube
 
 EXPOSE 80
 
