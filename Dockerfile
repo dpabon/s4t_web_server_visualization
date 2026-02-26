@@ -52,4 +52,4 @@ COPY config.yml ./config.yml
 
 COPY places ./places
 
-CMD xcube serve -c config.yml /data/data.zarr -p 80
+CMD ["bash", "-c", "source activate xcube && xcube serve -c config.yml /data/data.zarr -p 80"]
