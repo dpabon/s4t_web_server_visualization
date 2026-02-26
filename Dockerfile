@@ -38,8 +38,8 @@ RUN  cp -rf ./xcube-viewer/dist ./xcube/xcube/webapi/viewer/
 
 RUN cd ./xcube && \
     conda init && \
-    conda activate xcube && \
-    pip install -ve ./xcube
+    conda activate . && \
+    pip install -ve
 
 EXPOSE 80
 
