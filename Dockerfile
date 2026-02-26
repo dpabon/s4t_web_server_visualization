@@ -36,9 +36,10 @@ RUN echo $(ls -1 ./xcube-viewer/)
 
 RUN  cp -rf ./xcube-viewer/dist ./xcube/xcube/webapi/viewer/
 
-RUN conda env update --file ./xcube/environment.yml --prune --name base
-
-RUN pip install -ve ./xcube
+RUN cd ./xcube && \
+    conda env create && \
+    conda activate xcube && \
+    pip install -ve ./xcube
 
 EXPOSE 80
 
