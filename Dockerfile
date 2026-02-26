@@ -41,9 +41,8 @@ RUN /opt/conda/bin/conda init bash
 
 SHELL ["/bin/bash", "-c"]
 
-
-RUN conda activate ./xcube && \
-    pip install -ve ./xcube
+RUN echo "source activate xcube" >> ~/.bashrc && \
+    /bin/bash -c "source activate xcube && pip install -ve ./xcube"
 
 EXPOSE 80
 
