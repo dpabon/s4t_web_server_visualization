@@ -37,7 +37,7 @@ RUN echo $(ls -1 ./xcube-viewer/)
 RUN  cp -rf ./xcube-viewer/dist ./xcube/xcube/webapi/viewer/
 
 RUN cd ./xcube && \
-    conda env create && \
+    conda init && \
     conda activate xcube && \
     pip install -ve ./xcube
 
